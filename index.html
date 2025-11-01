@@ -4,17 +4,189 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 Not Found</title>
-    <link rel="stylesheet" href="index.css">
+    <title>Hello World</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+            background: linear-gradient(135deg, #ffd1dc, #ffe6ea);
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #ff6b8b;
+            position: relative;
+        }
+
+        .container {
+            text-align: center;
+            z-index: 2;
+        }
+
+        h1 {
+            font-size: 5rem;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            animation: fadeInUp 1.5s ease-out;
+        }
+
+        .tree {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 60vh;
+            background: url('https://raw.githubusercontent.com/alithw/cdn/main/tree.png') no-repeat bottom center;
+            background-size: contain;
+            z-index: 1;
+            display: none;
+        }
+
+        .tree-left,
+        .tree-right {
+            position: absolute;
+            bottom: 0;
+            height: 80vh;
+            width: 40vw;
+            background: url('https://raw.githubusercontent.com/alithw/cdn/main/tree.png') no-repeat bottom center;
+            background-size: contain;
+            z-index: 1;
+            animation: sway 5s ease-in-out infinite alternate;
+        }
+
+        .tree-left {
+            left: -5vw;
+            transform-origin: bottom left;
+        }
+
+        .tree-right {
+            right: -5vw;
+            transform-origin: bottom right;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes sway {
+            from {
+                transform: rotate(-2deg);
+            }
+
+            to {
+                transform: rotate(2deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .tree-left {
+                display: none;
+            }
+
+            .tree-right {
+                width: 80vw;
+                right: -20vw;
+            }
+
+            h1 {
+                font-size: 3rem;
+            }
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 20px;
+            font-size: 1rem;
+            color: #855858;
+            z-index: 3;
+        }
+
+        .petal {
+            position: absolute;
+            background-color: #ffd1dc;
+            border-radius: 150% 0 150% 0;
+            animation: falling linear infinite;
+        }
+
+        @keyframes falling {
+            0% {
+                transform: translate(0, -10px) rotate(0deg);
+                opacity: 0.9;
+            }
+
+            100% {
+                transform: translate(100px, 100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .petals-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="falling-flowers"></div>
-    <div class="error-page">
-        <h1>404</h1>
-        <p>Oops! The page you are looking for cannot be found.</p>
-        <p>Take a moment to enjoy the cherry blossoms 🌸</p>
+    <div class="container">
+        <h1>Hello World</h1>
     </div>
+    <div class="tree-left"></div>
+    <div class="tree-right"></div>
+    <div class="petals-container"></div>
+    <div class="footer">2025 - alithw.qzz.io</div>
+
+    <script>
+        function createPetal() {
+            const petal = document.createElement('div');
+            petal.className = 'petal';
+
+            // Random size between 10px and 20px
+            const size = Math.random() * 10 + 10;
+            petal.style.width = `${size}px`;
+            petal.style.height = `${size}px`;
+
+            // Random position from left
+            petal.style.left = `${Math.random() * 100}vw`;
+
+            // Random animation duration between 4s and 10s
+            const duration = Math.random() * 6 + 4;
+            petal.style.animationDuration = `${duration}s`;
+
+            // Random delay
+            petal.style.animationDelay = `${Math.random() * 5}s`;
+
+            document.querySelector('.petals-container').appendChild(petal);
+
+            // Remove petal after animation
+            setTimeout(() => {
+                petal.remove();
+            }, duration * 1000);
+        }
+
+        // Create initial petals
+        for (let i = 0; i < 30; i++) {
+            createPetal();
+        }
+
+        // Continue creating petals
+        setInterval(createPetal, 300);
+    </script>
 </body>
 
 </html>
